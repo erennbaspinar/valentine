@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senin İçin Küçük Bir Sürpriz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .page {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        button {
+            background: #ff758c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #ff5e78;
+        }
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            outline: none;
+            border-radius: 5px;
+            position: relative;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 40px;
+            height: 40px;
+            background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center;
+            background-size: contain;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="page1" class="page active">
+            <h1>Bugün özel bir gün...</h1>
+            <p>Belki bizim için de biraz özel olabilir :)</p>
+            <button onclick="nextPage(2)">Devam et</button>
+        </div>
+        
+        <div id="page2" class="page">
+            <h1>Merhaba, [isim]!</h1>
+            <p>Seni tanımak gerçekten çok güzel! 😊</p>
+            <button onclick="nextPage(3)">Devam et</button>
+        </div>
+        
+        <div id="page3" class="page">
+            <h1>Beni ne kadar tanıyorsun?</h1>
+            <p>Küçük bir anket yapalım!</p>
+            <form id="quizForm">
+                <div class="slider-container">
+                    <p>Soru 1: Beni ne kadar özlüyorsun?</p>
+                    <input type="range" min="1" max="10" value="5" class="slider" name="soru1">
+                </div>
+                <div class="slider-container">
+                    <p>Soru 2: Birlikte vakit geçirmek hoşuna gidiyor mu?</p>
+                    <input type="range" min="1" max="10" value="5" class="slider" name="soru2">
+                </div>
+                <div class="slider-container">
+                    <p>Soru 3: Sence ben tatlı biri miyim? 😏</p>
+                    <input type="range" min="1" max="10" value="5" class="slider" name="soru3">
+                </div>
+                <button type="submit">Gönder</button>
+            </form>
+        </div>
+        
+        <div id="page4" class="page">
+            <h1>Teşekkürler!</h1>
+            <p>Yanıtlarını aldım, umarım keyif almışsındır! 💖</p>
+        </div>
+    </div>
+
+    <script>
+        function nextPage(pageNumber) {
+            document.querySelector('.active').classList.remove('active');
+            document.getElementById('page' + pageNumber).classList.add('active');
+        }
+        
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const results = {};
+            formData.forEach((value, key) => {
+                results[key] = value;
+            });
+            console.log("Anket Sonuçları:", results);
+            nextPage(4);
+        });
+    </script>
+</body>
+</html>
